@@ -1,0 +1,4 @@
+Sitemap: https://pyphs.github.io/pyphs/sitemapindex.xml
+
+User-Agent: *
+Host: pyphs.github.io
