@@ -17,7 +17,7 @@ import time
 
 
 # Data about this site
-BLOG_AUTHOR = "afalaize"  # (translatable)
+BLOG_AUTHOR = "PyPHS project"  # (translatable)
 BLOG_TITLE = "PyPHS"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
@@ -25,8 +25,8 @@ SITE_URL = "https://pyphs.github.io/pyphs/"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://pyphs.github.io/pyphs/"
-BLOG_EMAIL = "antoine.falaize@gmail.com"
-BLOG_DESCRIPTION = "This is a companion site for the python package PyPHS"  # (translatable)
+BLOG_EMAIL = "pyphs.project@gmail.com"
+BLOG_DESCRIPTION = "This is a companion website for PyPHS"  # (translatable)
 
 # Nikola is multilingual!
 #
@@ -131,27 +131,27 @@ NAVIGATION_LINKS = {
     DEFAULT_LANG: (
     	(
         	(
-        		("/posts/docs/port-hamiltonian-systems/", "Port-Hamiltonian Systems"), 
-        		("/posts/docs/pyphs-method/", "PyPHS.Method"), 
-        	), 
+        		("/posts/docs/port-hamiltonian-systems/", "Port-Hamiltonian Systems"),
+        		("/posts/docs/pyphs-method/", "PyPHS.Method"),
+        	),
         	"Documentation"
         ),
         (
         	(
-        		("/posts/tutos/pyphs-core/", "PyPHS.Core"), 
-        		("/posts/tutos/pyphs-evaluation/", "PyPHS.Evaluation"), 
-        		("/posts/tutos/pyphs-graph/", "PyPHS.Graph"), 
-        		("/posts/tutos/pyphs-simulation/", "PyPHS.Simulation"), 
-        	), 
+        		("/posts/tutos/pyphs-core/", "PyPHS.Core"),
+        		("/posts/tutos/pyphs-evaluation/", "PyPHS.Evaluation"),
+        		("/posts/tutos/pyphs-graph/", "PyPHS.Graph"),
+        		("/posts/tutos/pyphs-simulation/", "PyPHS.Simulation"),
+        	),
         	"Tutorials"
         ),
         (
         	(
-        		("/posts/dicos/electronics/electronics/", "Electronic"), 
-        		("/building/", "Mechanic"), 
-        		("/building/", "Magnetic"), 
-        		("/building/", "Thermic"), 
-        	), 
+        		("/posts/dicos/electronics/electronics/", "Electronic"),
+        		("/building/", "Mechanic"),
+        		("/building/", "Magnetic"),
+        		("/building/", "Thermic"),
+        	),
         	"Dictionary"
         ),
     ),
@@ -574,7 +574,7 @@ GITHUB_SOURCE_BRANCH = 'master'
 GITHUB_DEPLOY_BRANCH = 'gh-pages'
 
 # The name of the remote where you wish to push to, using github_deploy.
-GITHUB_REMOTE_NAME = 'pyphs'
+GITHUB_REMOTE_NAME = 'origin'
 
 # Whether or not github_deploy should commit to the source branch automatically
 # before deploying.
