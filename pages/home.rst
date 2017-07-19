@@ -49,18 +49,23 @@ Status
 
 This package is in development status Beta. The continuous integration is checked with Travis for Unix systems and AppVeyor for Windows systems (see build status below).
 
-.. image:: https://www.travis-ci.org/pyphs/pyphs.svg?branch=master
+|Travis| |Appveyor| |Codecov| |Landscape|
+
+.. |Travis| image:: https://www.travis-ci.org/pyphs/pyphs.svg?branch=master
     :target: https://www.travis-ci.org/pyphs/pyphs
 
-.. image:: https://ci.appveyor.com/api/projects/status/53d7phhgksrd4fvn?svg=true
+.. |Appveyor| image:: https://ci.appveyor.com/api/projects/status/53d7phhgksrd4fvn?svg=true
     :target: https://ci.appveyor.com/project/pyphsadmin/pyphs
 
-.. image:: https://codecov.io/gh/pyphs/pyphs/branch/master/graph/badge.svg
+
+.. |Codecov| image:: https://codecov.io/gh/pyphs/pyphs/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/pyphs/pyphs
 
-.. image:: https://landscape.io/github/pyphs/pyphs/master/landscape.svg?style=flat
+
+.. |Landscape| image:: https://landscape.io/github/pyphs/pyphs/master/landscape.svg?style=flat
    :target: https://landscape.io/github/pyphs/pyphs/master
    :alt: Health
+
 
 Licence
 =======
