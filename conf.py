@@ -139,7 +139,7 @@ NAVIGATION_LINKS = {
         (
         	(
         		("/posts/tutos/pyphs-core/", "PyPHS.Core"),
-        		("/posts/tutos/pyphs-evaluation/", "PyPHS.Evaluation"),
+        		("/posts/tutos/evaluation/", "PyPHS.Evaluation"),
         		("/posts/tutos/pyphs-graph/", "PyPHS.Graph"),
         		("/posts/tutos/pyphs-simulation/", "PyPHS.Simulation"),
         	),
