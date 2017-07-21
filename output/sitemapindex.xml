@@ -7,19 +7,19 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/authors/afalaize.xml</loc>
-  <lastmod>2017-07-19T21:52:00Z</lastmod>
+  <lastmod>2017-07-20T21:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/authors/pyphs-project.xml</loc>
-  <lastmod>2017-07-19T19:07:00Z</lastmod>
+  <lastmod>2017-07-21T16:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/authors/tlebrun.xml</loc>
-  <lastmod>2017-07-19T19:07:00Z</lastmod>
+  <lastmod>2017-07-20T21:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/categories/cat_documentation.xml</loc>
-  <lastmod>2017-07-19T19:07:00Z</lastmod>
+  <lastmod>2017-07-21T16:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/categories/cat_electronics.xml</loc>
@@ -27,7 +27,7 @@
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/categories/cat_tutorial.xml</loc>
-  <lastmod>2017-07-19T21:52:00Z</lastmod>
+  <lastmod>2017-07-20T21:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/categories/components.xml</loc>
@@ -39,7 +39,11 @@
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/categories/mathjax.xml</loc>
-  <lastmod>2017-07-19T21:52:00Z</lastmod>
+  <lastmod>2017-07-21T16:26:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://pyphs.github.io/pyphs/categories/phs.xml</loc>
+  <lastmod>2017-07-21T16:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/categories/storages.xml</loc>
@@ -47,11 +51,11 @@
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/categories/theory.xml</loc>
-  <lastmod>2017-07-19T19:07:00Z</lastmod>
+  <lastmod>2017-07-21T16:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/categories/thiele-small-mathjax.xml</loc>
-  <lastmod>2017-07-19T19:07:00Z</lastmod>
+  <lastmod>2017-07-20T21:43:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/galleries/intro/rss.xml</loc>
@@ -71,10 +75,10 @@
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/rss.xml</loc>
-  <lastmod>2017-07-19T21:52:00Z</lastmod>
+  <lastmod>2017-07-21T16:26:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://pyphs.github.io/pyphs/sitemap.xml</loc>
-  <lastmod>2017-07-19T21:52:00Z</lastmod>
+  <lastmod>2017-07-21T16:26:00Z</lastmod>
  </sitemap>
 </sitemapindex>
