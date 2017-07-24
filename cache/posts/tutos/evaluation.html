@@ -11778,57 +11778,152 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this tutorial, we cover the <code>pyphs.Simulation</code> object for the numerical simulation of <code>pyphs.Core</code> objects. The core object from the previous tutorial on <a href="https://afalaize.github.io/pyphs/posts/pyphs-core/"><code>pyphs.Core</code></a> is used as an example.</p>
+<p>In this tutorial, we cover the <code>pyphs.Evaluation</code> object for the numerical evaluation of <code>pyphs.Core</code> objects. The core PHS object associated with the Thiele-Small modeling of electrodynamic loudspeakers is used as an example.</p>
 <!-- TEASER_END -->
 
-<p>The corresponding Python script <code>pyphs-simulation.py</code> can be found in the tutorials at <code>\pyphs\tutorials\</code></p>
+<p>The <a href="https://github.com/pyphs/pyphs/tree/master/pyphs/examples/thielesmall">example</a> can be found in the PyPHS examples at <code>\pyphs\examples\</code> and the script <a href="https://github.com/pyphs/pyphs/tree/master/pyphs/examples/thielesmall"><code>evaluation.py</code></a> corresponding to this notebook can be found in the PyPHS tutorials at <code>\pyphs\tutorials\</code>.</p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Description">Description<a class="anchor-link" href="#Description">&#182;</a></h1><p>The <code>pyphs.Evaluation</code> object build the numerical functions associated with the symbolic expressions of a <code>pyphs.Core</code>. This is not a dynamical object, so it has to be rebuild if the core is changed in any way.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Retrieve-the-pyphs.Core-from-the-Thiele-Small-example">Retrieve the pyphs.Core from the Thiele-Small example<a class="anchor-link" href="#Retrieve-the-pyphs.Core-from-the-Thiele-Small-example">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Plot appears in the notebook</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyphs.examples.thielesmall.thielesmall</span> <span class="k">import</span> <span class="n">core</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Read netlist thielesmall.net
+from folder /Users/afalaize/Developement/repos/pyphs/pyphs/examples/thielesmall/
+pass &#34;#=======================  INPUTS  ========================#&#34;
+read &#34;electronics.source      IN  (&#39;A&#39;, &#39;#&#39;):             type=voltage;&#34;
+pass &#34;#&#34;
+pass &#34;#=====================  ELECTRONICS  =====================#&#34;
+read &#34;electronics.resistor    R   (&#39;A&#39;, &#39;B&#39;):             R=(&#39;R&#39;, 5.9);&#34;
+read &#34;electronics.inductor    L   (&#39;B&#39;, &#39;C&#39;):             L=(&#39;L&#39;, 2.36*1e-3);&#34;
+pass &#34;#&#34;
+pass &#34;#======================  CONNECTOR  ======================#&#34;
+read &#34;connectors.transformer  T   (&#39;C&#39;, &#39;#&#39;, &#39;D&#39;, &#39;#&#39;):   alpha=(&#39;Bl&#39;, 16.37);&#34;
+pass &#34;#&#34;
+pass &#34;#======================  MECHANICS  ======================#&#34;
+read &#34;mechanics.mass          M   (&#39;D&#39;,):                 M=(&#39;M&#39;, 0.075);&#34;
+read &#34;mechanics.stiffness     K   (&#39;D&#39;, &#39;#&#39;):             K=(&#39;K&#39;, 1e4);&#34;
+read &#34;mechanics.damper        A   (&#39;D&#39;, &#39;#&#39;):             A=(&#39;A&#39;, 10.);&#34;
+pass &#34;&#34;
+Build graph IN...
+Build graph R...
+Build graph L...
+Build graph T...
+Build graph M...
+Build graph K...
+Build graph A...
+Build graph thielesmall...
+Build core thielesmall...
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The structure is</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Support for Python 2.x and Python 3.x</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
-
-<span class="c1"># Disable warnings </span>
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> 
-<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-
-<span class="c1"># import of external packages</span>
-<span class="kn">import</span> <span class="nn">numpy</span>                     <span class="c1"># numerical tools</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>  <span class="c1"># plot tools</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">core</span><span class="o">.</span><span class="n">pprint</span><span class="p">()</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>⎡⎡dxK⎤, ⎡ 0     0      -1.0     0    0     0 ⎤, ⎡gxK⎤⎤
+⎢⎢   ⎥  ⎢                                    ⎥  ⎢   ⎥⎥
+⎢⎢dxL⎥  ⎢ 0     0     -1.0⋅Bl   0   -1.0  1.0⎥  ⎢gxL⎥⎥
+⎢⎢   ⎥  ⎢                                    ⎥  ⎢   ⎥⎥
+⎢⎢dxM⎥  ⎢1.0  1.0⋅Bl     0     1.0   0     0 ⎥  ⎢gxM⎥⎥
+⎢⎢   ⎥  ⎢                                    ⎥  ⎢   ⎥⎥
+⎢⎢wA ⎥  ⎢ 0     0      -1.0     0    0     0 ⎥  ⎢zA ⎥⎥
+⎢⎢   ⎥  ⎢                                    ⎥  ⎢   ⎥⎥
+⎢⎢wR ⎥  ⎢ 0    1.0       0      0    0     0 ⎥  ⎢zR ⎥⎥
+⎢⎢   ⎥  ⎢                                    ⎥  ⎢   ⎥⎥
+⎣⎣yIN⎦  ⎣ 0    -1.0      0      0    0     0 ⎦  ⎣uIN⎦⎦
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>with the state</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyphs.tutorials.core</span> <span class="k">import</span> <span class="n">core</span> 
-<span class="kn">from</span> <span class="nn">pyphs</span> <span class="k">import</span> <span class="n">Simulation</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">core</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 
 </div>
@@ -11840,38 +11935,159 @@ div#notebook {
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[3]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Remove Inverse of Parameters...
-</pre>
-</div>
-</div>
 
-</div>
+
+<div class="output_latex output_subarea output_execute_result">
+$$\left [ xK, \quad xL, \quad xM\right ]$$
 </div>
 
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>the dissipation variable</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">core</span><span class="o">.</span><span class="n">w</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[4]:</div>
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$$\left [ wA, \quad wR\right ]$$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>the storage function (Hamiltonian)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">core</span><span class="o">.</span><span class="n">H</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[5]:</div>
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$$0.5 K xK^{2} + \frac{0.5 xM^{2}}{M} + \frac{0.5 xL^{2}}{L}$$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>the dissipation function</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">core</span><span class="o">.</span><span class="n">z</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[6]:</div>
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$$\left [ A wA, \quad R wR\right ]$$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and the parameters</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define the simulation parameters</span>
-<span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fs&#39;</span><span class="p">:</span> <span class="mf">48e3</span><span class="p">,</span>               <span class="c1"># Sample rate (Hz)</span>
-          <span class="s1">&#39;grad&#39;</span><span class="p">:</span> <span class="s1">&#39;discret&#39;</span><span class="p">,</span>    <span class="c1"># gradient evaluation in {&#39;discret&#39;, &#39;theta&#39;, &#39;trapez&#39;}</span>
-          <span class="s1">&#39;theta&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>             <span class="c1"># theta for evaluation of the structure</span>
-          <span class="s1">&#39;split&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>            <span class="c1"># Split and presolve the explicit equations</span>
-          <span class="s1">&#39;maxit&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>              <span class="c1"># Max number of iterations for NL solvers</span>
-          <span class="s1">&#39;eps&#39;</span><span class="p">:</span> <span class="mf">1e-11</span><span class="p">,</span>          <span class="c1"># Global numerical tolerance</span>
-          <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>             <span class="c1"># Path to saved results. If None, /data/ is created.</span>
-          <span class="s1">&#39;pbar&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>     <span class="c1"># Display a progress bar</span>
-          <span class="s1">&#39;timer&#39;</span><span class="p">:</span> <span class="kc">False</span>            <span class="c1"># Display minimal timing infos</span>
-          <span class="p">}</span>
-
-<span class="c1"># Instantiate a pyphs.Simulation object associated with a given core PHS</span>
-
-<span class="n">simu</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">to_simulation</span><span class="p">(</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">core</span><span class="o">.</span><span class="n">subs</span>
 </pre></div>
 
 </div>
@@ -11883,67 +12099,45 @@ div#notebook {
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[7]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Build method my_core...
-Build numeric my_core...
-Build data i/o...
-</pre>
-</div>
+
+
+<div class="output_latex output_subarea output_execute_result">
+$$\left \{ A : 10.0, \quad Bl : 16.37, \quad K : 10000.0, \quad L : 0.00236, \quad M : 0.075, \quad R : 5.9\right \}$$
 </div>
 
 </div>
+
+</div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Build-Evaluation-object">Build Evaluation object<a class="anchor-link" href="#Build-Evaluation-object">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The evaluation object is build with</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># def simulation time</span>
-<span class="n">tmax</span> <span class="o">=</span> <span class="mf">0.02</span>
-<span class="n">nmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tmax</span><span class="o">*</span><span class="n">simu</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;fs&#39;</span><span class="p">])</span>
-<span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">/</span><span class="n">simu</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;fs&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nmax</span><span class="p">)]</span>
-
-
-<span class="c1"># def input signal</span>
-<span class="k">def</span> <span class="nf">sig</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sin&#39;</span><span class="p">):</span>
-    <span class="n">F</span> <span class="o">=</span> <span class="mf">1000.</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="mf">1000.</span>
-    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;sin&#39;</span><span class="p">:</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">A</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">F</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;impact&#39;</span><span class="p">:</span>
-        <span class="n">dur</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="mf">1e-3</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="mf">0.001</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">A</span> <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="o">+</span> <span class="n">dur</span> <span class="k">else</span> <span class="mf">0.</span>
-    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span><span class="p">:</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="mf">0.</span>
-    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">out</span><span class="p">])</span>
-
-
-<span class="c1"># def generator for sequence of inputs to feed in the PHSSimulation object</span>
-<span class="k">def</span> <span class="nf">sequ</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;impact&#39;</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">tn</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">sig</span><span class="p">(</span><span class="n">tn</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Initialize the simulation</span>
-<span class="n">simu</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="n">sequ</span><span class="p">(),</span> <span class="n">nt</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-
-<span class="c1"># Proceed</span>
-<span class="n">simu</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">to_evaluation</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;dxH&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;Jxx&#39;</span><span class="p">],</span> <span class="n">vectorize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11958,8 +12152,7 @@ Build data i/o...
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Simulation: Process...
-Simulation: Done
+<pre>Build numerical evaluations...
 </pre>
 </div>
 </div>
@@ -11968,12 +12161,53 @@ Simulation: Done
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice the symbols associated with entries in the substitution dictionary <code>core.subs</code> are automatically replaced by their correponding value in <code>core.subs</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The parameters are</p>
+<ul>
+<li><strong><code>names</code>:  list of strings or 'all' (optional).</strong> List of core's arguments names associated with the functions that
+  will be lambdified. If 'all', the names for every arguments,
+  every functions (including all systems matrices and sub-matrices),
+  and every operations are considered (processing time increases
+  quickly with original core's complexity if thsi option is used).</li>
+<li><strong><code>vectorize</code>: bool (optional).</strong> If True, every functions are vectorized with numpy.vectorize.
+  The default is True.   </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Arguments">Arguments<a class="anchor-link" href="#Arguments">&#182;</a></h1><p>The arguments of numerical functions are taken from the vector 
+$$\mathbf{args} \triangleq (\mathbf x, \, \delta \mathbf x, \, \mathbf w, \, \mathbf u, \, \mathbf p, \, \mathbf o)$$
+from the original <code>Core</code>:</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">simu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span><span class="o">.</span><span class="n">args</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -11985,12 +12219,12 @@ Simulation: Done
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[10]:</div>
+<div class="prompt output_prompt">Out[9]:</div>
 
 
 
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;generator object data_generator at 0x7f8a2a17bba0&gt;</pre>
+<div class="output_latex output_subarea output_execute_result">
+$$\left [ xK, \quad xL, \quad xM, \quad dxK, \quad dxL, \quad dxM, \quad wA, \quad wR, \quad uIN\right ]$$
 </div>
 
 </div>
@@ -11998,25 +12232,58 @@ Simulation: Done
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below we define a set of numerical values for these arguments</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5e-4</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">]</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5e-3</span><span class="p">,</span> <span class="mf">2e-1</span><span class="p">]</span>
+<span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5e-3</span><span class="p">,</span> <span class="p">]</span>
+<span class="n">u</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="p">]</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="n">u</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Call-to-Functions">Call to Functions<a class="anchor-link" href="#Call-to-Functions">&#182;</a></h1><p>For each function that has been built at initialization, <code>Evaluation</code> contains</p>
+<ol>
+<li>a list <code>Evaluation.funcname_args</code> of symbols for arguments, </li>
+<li>a list <code>Evaluation.funcname_inds</code> of corresponding indices in $\mathbf{args}$,</li>
+<li>a numerical function <code>Evaluation.funcname</code> with arguments defined by the list (1),</li>
+</ol>
+<p>where <code>funcname</code> has to be changed to appropriate funcion name.</p>
+<p>As a example, we evaluate below the Hamiltonian</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The simulation results are stored in the simu.data object</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">t</span><span class="p">()</span>       <span class="c1"># a generator of time value at each time step</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="p">()</span>       <span class="c1"># a generator of value for vector x at each time step</span>
-<span class="n">x1</span> <span class="o">=</span> <span class="n">simu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># a generator of value for scalar x component 1</span>
-
-<span class="n">t_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-<span class="n">x_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">x1_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_list</span><span class="p">,</span> <span class="n">x1_list</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$t \; \mathrm{(s)}$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_L \; \mathrm{(Wb)}$&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">core</span><span class="o">.</span><span class="n">H</span>
 </pre></div>
 
 </div>
@@ -12032,8 +12299,8 @@ Simulation: Done
 
 
 
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.text.Text at 0x7f8a2a0f7da0&gt;</pre>
+<div class="output_latex output_subarea output_execute_result">
+$$0.5 K xK^{2} + \frac{0.5 xM^{2}}{M} + \frac{0.5 xL^{2}}{L}$$
 </div>
 
 </div>
@@ -12041,16 +12308,23 @@ Simulation: Done
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>which reads after substitution</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">ex</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ex</span> <span class="ow">in</span> <span class="n">x_list</span><span class="p">],</span> <span class="p">[</span><span class="n">ex</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ex</span> <span class="ow">in</span> <span class="n">x_list</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_L\; \mathrm{(Wb)}$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_C \; \mathrm{(C)}$&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">H</span>
 </pre></div>
 
 </div>
@@ -12066,8 +12340,257 @@ Simulation: Done
 
 
 
+<div class="output_latex output_subarea output_execute_result">
+$$5000.0 xK^{2} + 211.864406779661 xL^{2} + 6.66666666666667 xM^{2}$$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The arguments are</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span><span class="o">.</span><span class="n">H_args</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[13]:</div>
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$$\left ( xK, \quad xL, \quad xM\right )$$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and correspond to the following entries in $\mathbf{args}$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span><span class="o">.</span><span class="n">H_inds</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[14]:</div>
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$$\left ( 0, \quad 1, \quad 2\right )$$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>i.e. the numerical values for the arguments are</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span> <span class="o">=</span> <span class="p">[</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">evals</span><span class="o">.</span><span class="n">H_inds</span><span class="p">]</span>
+<span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[15]:</div>
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$$\left ( 0.0005, \quad 0.02, \quad 0.005\right )$$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Thus, the function for the evaluation of the Hamiltonian takes three argmuents. 
+It is called with</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span><span class="o">.</span><span class="n">H</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[16]:</div>
+
+
+
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.text.Text at 0x7f8a29eb2f28&gt;</pre>
+<pre>array(0.08616242937853107)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>or directly</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_vec</span> <span class="o">=</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span>
+<span class="n">evals</span><span class="o">.</span><span class="n">H</span><span class="p">(</span><span class="o">*</span><span class="n">x_vec</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[17]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array(0.08616242937853107)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Also notice the case with no arguments, e.g.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Jxx</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[18]:</div>
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$$\left[\begin{matrix}0 & 0 & -1.0\\0 & 0 & -16.37\\1.0 & 16.37 & 0\end{matrix}\right]$$
 </div>
 
 </div>
@@ -12078,40 +12601,130 @@ Simulation: Done
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">simu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="p">([(</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;dtx&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">evals</span><span class="o">.</span><span class="n">Jxx_args</span><span class="p">,</span> <span class="n">evals</span><span class="o">.</span><span class="n">Jxx_inds</span><span class="p">)</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>() ()
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">simu</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">plot_powerbal</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span><span class="o">.</span><span class="n">Jxx</span><span class="p">()</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[20]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[  0.  ,   0.  ,  -1.  ],
+       [  0.  ,   0.  , -16.37],
+       [  1.  ,  16.37,   0.  ]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Vectorize">Vectorize<a class="anchor-link" href="#Vectorize">&#182;</a></h1><p>If the option <code>vectorize=True</code> has been passed to the initialization of the <code>Evaluation</code> object, each argument of function can be a vector of values. Below, we define vectors of random values</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">x1_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="mf">1e-3</span>
+<span class="n">x2_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="mf">1e-3</span>
+<span class="n">x3_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="mf">1e-3</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and call the function with these vectors:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">evals</span><span class="o">.</span><span class="n">H</span><span class="p">(</span><span class="n">x1_vec</span><span class="p">,</span> <span class="n">x3_vec</span><span class="p">,</span> <span class="n">x3_vec</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[22]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.00178008,  0.00025182,  0.00198044,  0.00021611,  0.00194477])</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 

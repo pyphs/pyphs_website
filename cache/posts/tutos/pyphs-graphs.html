@@ -11847,7 +11847,7 @@ The method exactly implements <strong>algorithm 1</strong> of the academic refer
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyphs.graphs</span> <span class="k">import</span> <span class="n">datum</span>
@@ -11863,7 +11863,7 @@ The method exactly implements <strong>algorithm 1</strong> of the academic refer
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[2]:</div>
+<div class="prompt output_prompt">Out[1]:</div>
 
 
 
@@ -11934,7 +11934,7 @@ electronics.capacitor C1 ('C', 'ref'): C=('C1', 2e-06);</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyphs</span> <span class="k">import</span> <span class="n">Netlist</span>
@@ -11996,7 +11996,7 @@ from folder
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;dictionary&#39;</span><span class="p">:</span> <span class="s1">&#39;electronics&#39;</span><span class="p">,</span>
@@ -12023,7 +12023,7 @@ from folder
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
@@ -12039,7 +12039,7 @@ from folder
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[5]:</div>
+<div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -12065,7 +12065,7 @@ from folder
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">netlist</span><span class="p">())</span>
@@ -12104,7 +12104,7 @@ from folder
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># resistor</span>
@@ -12149,7 +12149,7 @@ from folder
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">net</span><span class="p">:</span>
@@ -12168,10 +12168,10 @@ from folder
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;arguments&#39;: {&#39;type&#39;: &#39;voltage&#39;}, &#39;label&#39;: &#39;out&#39;, &#39;component&#39;: &#39;source&#39;, &#39;nodes&#39;: (&#39;#&#39;, &#39;A&#39;), &#39;dictionary&#39;: &#39;electronics&#39;}
-{&#39;arguments&#39;: {&#39;R&#39;: (&#39;R1&#39;, 1000.0)}, &#39;label&#39;: &#39;R1&#39;, &#39;component&#39;: &#39;resistor&#39;, &#39;nodes&#39;: (&#39;A&#39;, &#39;B&#39;), &#39;dictionary&#39;: &#39;electronics&#39;}
-{&#39;arguments&#39;: {&#39;L&#39;: (&#39;L1&#39;, 0.05)}, &#39;label&#39;: &#39;L1&#39;, &#39;component&#39;: &#39;inductor&#39;, &#39;nodes&#39;: (&#39;B&#39;, &#39;C&#39;), &#39;dictionary&#39;: &#39;electronics&#39;}
-{&#39;arguments&#39;: {&#39;C&#39;: (&#39;C1&#39;, 2e-06)}, &#39;label&#39;: &#39;C1&#39;, &#39;component&#39;: &#39;capacitor&#39;, &#39;nodes&#39;: (&#39;C&#39;, &#39;#&#39;), &#39;dictionary&#39;: &#39;electronics&#39;}
+<pre>{&#39;label&#39;: &#39;out&#39;, &#39;dictionary&#39;: &#39;electronics&#39;, &#39;component&#39;: &#39;source&#39;, &#39;arguments&#39;: {&#39;type&#39;: &#39;voltage&#39;}, &#39;nodes&#39;: (&#39;#&#39;, &#39;A&#39;)}
+{&#39;label&#39;: &#39;R1&#39;, &#39;dictionary&#39;: &#39;electronics&#39;, &#39;component&#39;: &#39;resistor&#39;, &#39;arguments&#39;: {&#39;R&#39;: (&#39;R1&#39;, 1000.0)}, &#39;nodes&#39;: (&#39;A&#39;, &#39;B&#39;)}
+{&#39;label&#39;: &#39;L1&#39;, &#39;dictionary&#39;: &#39;electronics&#39;, &#39;component&#39;: &#39;inductor&#39;, &#39;arguments&#39;: {&#39;L&#39;: (&#39;L1&#39;, 0.05)}, &#39;nodes&#39;: (&#39;B&#39;, &#39;C&#39;)}
+{&#39;label&#39;: &#39;C1&#39;, &#39;dictionary&#39;: &#39;electronics&#39;, &#39;component&#39;: &#39;capacitor&#39;, &#39;arguments&#39;: {&#39;C&#39;: (&#39;C1&#39;, 2e-06)}, &#39;nodes&#39;: (&#39;C&#39;, &#39;#&#39;)}
 </pre>
 </div>
 </div>
@@ -12192,7 +12192,7 @@ from folder
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">netlist</span><span class="p">())</span>
@@ -12806,7 +12806,7 @@ $$\left \{ C_{1} : 2e-06, \quad L_{1} : 0.05, \quad R_{1} : 1000.0\right \}$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Simulation">Simulation<a class="anchor-link" href="#Simulation">&#182;</a></h1><p>The same simulation as in the <a href="/tutos/tuto0">Getting started tutorial</a> is perfromed as follows:</p>
+<h1 id="Simulation">Simulation<a class="anchor-link" href="#Simulation">&#182;</a></h1><p>The same simulation as in the <a href="/tutos/tuto0">Getting started tutorial</a> is performed as follows:</p>
 
 </div>
 </div>
@@ -12818,6 +12818,8 @@ $$\left \{ C_{1} : 2e-06, \quad L_{1} : 0.05, \quad R_{1} : 1000.0\right \}$$
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyphs</span> <span class="k">import</span> <span class="n">signalgenerator</span>
 <span class="kn">from</span> <span class="nn">pyphs</span> <span class="k">import</span> <span class="n">Simulation</span>
+<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> 
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 
 
 <span class="c1"># Simulation options</span>
@@ -12827,7 +12829,7 @@ $$\left \{ C_{1} : 2e-06, \quad L_{1} : 0.05, \quad R_{1} : 1000.0\right \}$$
           <span class="s1">&#39;theta&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
        <span class="p">}</span>
 
-<span class="n">simu</span> <span class="o">=</span> <span class="n">Simulation</span><span class="p">(</span><span class="n">core</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="n">simu</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">to_simulation</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 
 <span class="c1"># Signal parameters</span>
 <span class="n">A</span> <span class="o">=</span> <span class="mf">100.</span>                           <span class="c1"># signal amplitude</span>
@@ -12875,21 +12877,11 @@ $$\left \{ C_{1} : 2e-06, \quad L_{1} : 0.05, \quad R_{1} : 1000.0\right \}$$
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Build numerical method...
-Build numerical core...
+<pre>Build method rlc...
+Build numeric rlc...
 Build data i/o...
 Simulation: Process...
 Simulation: Done
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/tristan/anaconda3/lib/python3.5/site-packages/matplotlib/font_manager.py:1297: UserWarning: findfont: Font family [&#39;serif&#39;] not found. Falling back to DejaVu Sans
-  (prop.get_family(), self.defaultFamily[fontext]))
 </pre>
 </div>
 </div>
